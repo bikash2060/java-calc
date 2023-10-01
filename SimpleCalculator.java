@@ -3,7 +3,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.*;
 
-public class SimpleCalculator implements ActionListener
+public class Calculator implements ActionListener
 {
     //Declaring refrences of different components of swing:
     JFrame frame;
@@ -16,7 +16,7 @@ public class SimpleCalculator implements ActionListener
     int operator = 0;
     double result = 0;
 
-    public SimpleCalculator()
+    public Calculator()
     {
         //Creating object of frame, providing size and setting visible true:
         frame = new JFrame("Calculator");
@@ -98,7 +98,7 @@ public class SimpleCalculator implements ActionListener
         btn11.setFont(f1);
         panel.add(btn11);
 
-        btn12 = new JButton("x");
+        btn12 = new JButton("*");
         btn12.setBounds(250,240,50,50);
         btn12.setFont(f1);
         btn12.setBackground(Color.BLACK);
@@ -151,92 +151,104 @@ public class SimpleCalculator implements ActionListener
         btn16.addActionListener(this);
 
         frame.setSize(355,430);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         panel.setSize(355,430);
         frame.add(panel);
     }
     public void actionPerformed(ActionEvent event)
     {
-        //Inserting text/number according to selected button:
-        if(event.getSource() == btn14){
-            field.setText(field.getText().concat("0"));
-        }
-        if(event.getSource() == btn9){
-            field.setText(field.getText().concat("1"));
-        }
-        if(event.getSource() == btn10){
-            field.setText(field.getText().concat("2"));
-        }
-        if(event.getSource() == btn11){
-            field.setText(field.getText().concat("3"));
-        }
-        if(event.getSource() == btn5){
-            field.setText(field.getText().concat("4"));
-        }
-        if(event.getSource() == btn6){
-            field.setText(field.getText().concat("5"));
-        }
-        if(event.getSource() == btn7){
-            field.setText(field.getText().concat("6"));
-        }
-        if(event.getSource() == btn1){
-            field.setText(field.getText().concat("7"));
-        }
-        if(event.getSource() == btn2){
-            field.setText(field.getText().concat("8"));
-        }
-        if(event.getSource() == btn3){
-            field.setText(field.getText().concat("8"));
-        }
-        if(event.getSource() == btn13){
-            field.setText(null);
-        }
-        if(event.getSource() == btn4){
-            number1 = Double.parseDouble(field.getText());
-            operator = 1;
-            field.setText(null);
-        }
-        if(event.getSource() == btn8){
-            number1 = Double.parseDouble(field.getText());
-            operator = 2;
-            field.setText(null);
-        }
-        if(event.getSource() == btn12){
-            number1 = Double.parseDouble(field.getText());
-            operator = 3;
-            field.setText(null);
-        }
-        if(event.getSource() == btn16){
-            number1 = Double.parseDouble(field.getText());
-            operator = 4;
-            field.setText(null);
-        }
-        if(event.getSource() == btn15){
-            number2 = Integer.parseInt(field.getText());
-            switch (operator)
+        try
+        {
+            //Inserting text/number according to selected button:
+            if(event.getSource() == btn14){
+                field.setText(field.getText().concat("0"));
+            }
+            if(event.getSource() == btn9){
+                field.setText(field.getText().concat("1"));
+            }
+            if(event.getSource() == btn10){
+                field.setText(field.getText().concat("2"));
+            }
+            if(event.getSource() == btn11){
+                field.setText(field.getText().concat("3"));
+            }
+            if(event.getSource() == btn5){
+                field.setText(field.getText().concat("4"));
+            }
+            if(event.getSource() == btn6){
+                field.setText(field.getText().concat("5"));
+            }
+            if(event.getSource() == btn7){
+                field.setText(field.getText().concat("6"));
+            }
+            if(event.getSource() == btn1){
+                field.setText(field.getText().concat("7"));
+            }
+            if(event.getSource() == btn2){
+                field.setText(field.getText().concat("8"));
+            }
+            if(event.getSource() == btn3){
+                field.setText(field.getText().concat("8"));
+            }
+            if(event.getSource() == btn13){
+                field.setText(null);
+            }
+            if(event.getSource() == btn4){
+                number1 = Double.parseDouble(field.getText());
+                operator = 1;
+                field.setText(null);
+            }
+            if(event.getSource() == btn8){
+                number1 = Double.parseDouble(field.getText());
+                operator = 2;
+                field.setText(null);
+            }
+            if(event.getSource() == btn12){
+                number1 = Double.parseDouble(field.getText());
+                operator = 3;
+                field.setText(null);
+            }
+            if(event.getSource() == btn16){
+                number1 = Double.parseDouble(field.getText());
+                operator = 4;
+                field.setText(null);
+            }
+            if(event.getSource() == btn15)
             {
-                case 1:result = number1 + number2;
-                break;
+                number2 = Integer.parseInt(field.getText());
+                switch (operator)
+                {
+                    case 1:result = number1 + number2;
+                        break;
 
-                case 2:result = number1 - number2;
-                break;
+                    case 2:result = number1 - number2;
+                        break;
 
-                case 3:result = number1 * number2;
-                break;
+                    case 3:result = number1 * number2;
+                        break;
 
-                case 4:result = number1 / number2;
-                break;
+                    case 4:result = number1 / number2;
+                        break;
+                }
+                if(result == (int)result){
+                    field.setText(String.valueOf((int) result));
+                }
+                else{
+                    field.setText(String.valueOf((result)));
+                }
             }
-            if(result == (int)result){
-                field.setText(String.valueOf((int) result));
-            }
-            else{
-                field.setText(String.valueOf((result)));
-            }
+
+        }
+        catch (NumberFormatException e)
+        {
+            JOptionPane.showMessageDialog(frame,"Please enter correct number","Alert",JOptionPane.ERROR_MESSAGE);
+            field.setText("");
         }
     }
     public static void main(String[] args)
     {
-        new SimpleCalculator();
+        new Calculator();
     }
 }
